@@ -8,7 +8,7 @@
 #include <functional>
 #include <cstring>
 
-// List of builtin commands, followed by their corresponding functions
+// List of the commands that are introduced into the shell
 std::vector<std::string> builtin_str = {
     "cd",
     "help",
@@ -25,6 +25,8 @@ int lsh_num_builtins() {
     return builtin_str.size();
 }
 
+
+// The implementation of the commands
 int lsh_cd(std::vector<std::string>& args) {
 	if (args.size() < 2) {
 		std::cerr << "err: expected argument to \"cd\"" << std::endl;
@@ -38,9 +40,8 @@ int lsh_cd(std::vector<std::string>& args) {
 }
 
 int lsh_help(const std::vector<std::string>& args) {
-	std::cout << "Rares Racsan's shell." << std::endl;
 	std::cout << "Read the README file for info." << std::endl;
-	std::cout << "The following are built in:" << std::endl;
+	std::cout << "The following are built in commands:" << std::endl;
 
 	// Print out the list of built-in commands
 	for (const auto& cmd : builtin_str) {
@@ -91,14 +92,19 @@ std::vector<std::string> f_split_line(std::string line) {
 }
 
 int f_launch(std::vector<std::string> args) {
-	pid_t pid;// , wpid;
+	pid_t pid;
 	int status;
 
-	pid = fork();	// creating a parent and a child
-	// the child will try to exec the command
-	// value of pid - 0 => child
-	// 		- < 0 => failed fork()
-	// 		- > 0 => parent
+	pid = fork();	
+
+	/* 
+		creating a parent and a child
+		the child will try to exec the command
+		value of pid - 0 => child
+	 				 - < 0 => failed fork()
+	 				 - > 0 => parent
+	*/
+
 	if (pid == 0) {
 		// child
 		std::vector<char*> c_args;
@@ -141,7 +147,7 @@ int f_execute(std::vector<std::string>& args) {
     return f_launch(args);
 }
 
-void f_loop() {
+void f_loop() {	
 	std::string line;
 	std::vector<std::string> args;
 	int status = 1;
