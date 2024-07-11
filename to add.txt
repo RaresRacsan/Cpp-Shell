@@ -10,21 +10,8 @@ grep
 sed
 head
 tail
-awk
 sort
-cut
-diff
-tee locate
-find
-sudo
-su
 chmod
-chown
-df
-du 
 top
-htop
-ps
-uname
 history
 cal
