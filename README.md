@@ -1,4 +1,4 @@
-```diff
+
 $${\color{lightgreen}Light \space Green}$$What is this?
 This is an implementation of the shell in C++.
 
@@ -10,4 +10,4 @@ Run commands from linux in a c++ made shell.
 Usable commands: cd, help, exit
 
 @@More commands to come!@@
-```
+
