@@ -2,25 +2,26 @@
 
 #define BUFSIZE 1024
 
-using namespace std;
-
 void f_loop() {
-	string line;
-	vector<string> args;
+	std::string line;
+	std::vector<std::string> args;
 	int status = 1;
 
 	do {
-		cout << ">> ";
+		std::cout << ">> ";
 		line = f_read_line();
-		//args = f_split_line(line);
+		args = f_split_line(line);
 		//status = f_try_execute(args);
 	} while (status);
 }
 
-string f_read_line() {
-	string line;
+std::string f_read_line() {
+/**
+	* Reading a line from the console
+*/
+	std::string line;
 
-	if (!getline(cin, line)) {	// fail
+	if (!std::getline(std::cin, line)) {	// fail
 		perror("readline");
 		exit(0);
 	}
@@ -30,4 +31,21 @@ string f_read_line() {
 		}
 	}
 	return line;
+}
+
+std::vector<std::string> f_split_line(std::string line) {
+/**
+	* Parameters: a string in which the content of a line read from the console
+	* The function separates the word from the line read before
+*/
+	std::vector<std::string> arguments;
+	std::stringstream ss(line);
+	std::string word;
+
+	// extracting the words from the line
+	while (ss >> word) {
+		arguments.push_back(word);
+	}
+	
+	return arguments;
 }

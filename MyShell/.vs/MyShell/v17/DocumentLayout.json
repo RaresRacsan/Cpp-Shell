@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "MyShell\\functions.cpp",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\MyShellTest\\MyShell\\MyShell\\functions.cpp",
               "RelativeToolTip": "MyShell\\functions.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAA0AAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-11T08:54:37.927Z",
               "EditorCaption": ""
@@ -45,7 +45,7 @@
               "RelativeDocumentMoniker": "MyShell\\functions.h",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\MyShellTest\\MyShell\\MyShell\\functions.h",
               "RelativeToolTip": "MyShell\\functions.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAOAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-07-11T08:54:29.975Z",
               "EditorCaption": ""
@@ -60,8 +60,7 @@
               "RelativeToolTip": "MyShell\\MyShell.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-11T08:52:13.391Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T08:52:13.391Z"
             }
           ]
         }
