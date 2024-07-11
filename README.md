@@ -6,7 +6,7 @@ This is an implementation of the shell in C++.
 
 $${\color{lightblue}How \space to \space use?}$$
 <p align="center">
-After creating the files in any operating system based on Linux, run the following commands: `g++ MyShell.cpp -o MyShell` and `./MyShell`.
+After creating the files in any operating system based on Linux, run the following commands: <code>g++ MyShell.cpp -o MyShell</code> and <code>./MyShell</code>.
 </p>
 
 $${\color{purple}What \space can \space it \space do?}$$
