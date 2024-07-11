@@ -7,24 +7,27 @@
 #include <sys/wait.h>
 #include <functional>
 #include <cstring>
+#include <dirent.h>
+#include <sys/stat.h>
 
 // List of the commands that are introduced into the shell
 std::vector<std::string> builtin_str = {
     "cd",
     "help",
-    "exit"
+    "exit",
+	"ls"
 };
 
 std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
     lsh_cd,
     lsh_help,
-    lsh_exit
+    lsh_exit,
+	lsh_ls
 };
 
 int lsh_num_builtins() {
     return builtin_str.size();
 }
-
 
 // The implementation of the commands
 int lsh_cd(std::vector<std::string>& args) {
@@ -54,6 +57,62 @@ int lsh_help(const std::vector<std::string>& args) {
 
 int lsh_exit(const std::vector<std::string>& args) {
 	return 0;
+}
+
+std::string get_file_type(const std::string& path) {
+	struct stat file_stat;
+
+	// Use lstat to get information about the file
+	if (lstat(path.c_str(), &file_stat) == -1) {
+		perror("lstat error");
+		return "error";
+	}
+
+	// Check the file type using macros defined in sys/stat.h
+	if (S_ISREG(file_stat.st_mode))
+		return "regular file";
+	else if (S_ISDIR(file_stat.st_mode))
+		return "directory";
+	else if (S_ISLNK(file_stat.st_mode))
+		return "symbolic link";
+	else if (S_ISFIFO(file_stat.st_mode))
+		return "FIFO/pipe";
+	else if (S_ISSOCK(file_stat.st_mode))
+		return "socket";
+	else if (S_ISCHR(file_stat.st_mode))
+		return "character device";
+	else if (S_ISBLK(file_stat.st_mode))
+		return "block device";
+	else
+		return "unknown";
+}
+
+int lsh_ls(const std::vector<std::string>& args) {
+	// checking if there are arguments passed
+	if (args.size() > 1) {
+		std::cerr << "err: ls command takes no arguments" << std::endl;
+		return 1;
+	}
+
+	DIR* dir;
+	struct dirent* entry;
+
+	// opening the directory
+	dir = opendir(".");
+	if (dir == NULL) {
+		std::cerr << "err: Cannot open directory" << std::endl;
+		return 1;
+	}
+
+	// read and print the directory content
+	while ((entry = readdir(dir)) != NULL) {
+		if (entry->d_name[0] == '.')
+			continue;
+		std::cout << entry->d_name << " - " << get_file_type(entry->d_name) << std::endl;
+	}
+
+	closedir(dir);
+	return 1;
 }
 
 std::string f_read_line() {
