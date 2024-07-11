@@ -9,20 +9,28 @@
 #include <cstring>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <fstream>
+#include <filesystem>
 
 // List of the commands that are introduced into the shell
 std::vector<std::string> builtin_str = {
     "cd",
     "help",
     "exit",
-	"ls"
+	"ls",
+	"echo",
+	"touch",
+	"rm"
 };
 
 std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
     lsh_cd,
     lsh_help,
     lsh_exit,
-	lsh_ls
+	lsh_ls,
+	lsh_echo,
+	lsh_touch,
+	lsh_rm
 };
 
 int lsh_num_builtins() {
@@ -30,6 +38,58 @@ int lsh_num_builtins() {
 }
 
 // The implementation of the commands
+int lsh_rm(std::vector<std::string>& args) {
+	if (args.size() < 2) {
+		std::cerr << "err: expected arguments to \"rm\"" << std::endl;
+	}
+	else if (args.size() > 2) {
+		std::cerr << "err: too many arguments to \"rm\"" << std::endl;
+	}
+	else {
+		std::string file_name = args[1];
+		try {
+			if (std::filesystem::remove(file_name))
+				std::cout << "file " << file_name << " deleted.\n";
+			else
+				std::cout << "file " << file_name << " not found.\n";
+		}
+		catch (const std::filesystem::filesystem_error& err) {
+			std::cout << "filesystem error: " << err.what() << '\n';
+		}
+	}
+	return 1;
+}
+
+int lsh_touch(std::vector<std::string>& args) {
+	if (args.size() < 2) {
+		std::cerr << "err: expected arguments to \"touch\"" << std::endl;
+	}
+	else if (args.size() > 2) {
+		std::cerr << "err: too many arguments to \"touch\"" << std::endl;
+	}
+	else {
+		std::string file_name = args[1];
+		std::ofstream file(file_name);
+		if (file.fail()) {
+			std::cerr << "err: couldn't create file" << std::endl;
+		}
+	}
+	return 1;
+}
+
+int lsh_echo(std::vector<std::string>& args) {
+	if (args.size() < 2) {
+		std::cerr << "err: expected arguments to \"echo\"" << std::endl;
+	}
+	else {
+		for (int i = 1; i < args.size(); i++) {
+			std::cout << args[i] << ' ';
+		}
+		std::cout << std::endl;
+	}
+	return 1;
+}
+
 int lsh_cd(std::vector<std::string>& args) {
 	if (args.size() < 2) {
 		std::cerr << "err: expected argument to \"cd\"" << std::endl;

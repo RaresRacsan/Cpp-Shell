@@ -1,10 +1,7 @@
 pwd
 mkdir
-rm
 cp
 mv
-touch
-file
 zip and unzip
 tar
 nano, vi and jed
@@ -32,4 +29,3 @@ uname
 ping
 history
 cal
-echo
