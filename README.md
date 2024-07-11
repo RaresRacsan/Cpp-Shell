@@ -1,5 +1,5 @@
 
-$${\color{lightgreen}}What is this?$$
+$${\color{lightgreen}What is this?}$$
 This is an implementation of the shell in C++.
 
 @@How to use?@@
