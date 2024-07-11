@@ -12,6 +12,8 @@ After creating the files in any operating system based on Linux, run the followi
 $${\color{purple}What \space can \space it \space do?}$$
 <p align="center">
 Run commands from linux in a c++ made shell.
+</p>
+<p align="center">
 Usable commands: cd, help, exit
 </p>
 
