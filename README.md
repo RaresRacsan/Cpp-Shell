@@ -17,7 +17,7 @@ $${\color{purple}What \space can \space it \space do?}$$
 Run commands from linux in a c++ made shell.
 </p>
 <p align="center">
-Usable commands: cd, help, exit
+Usable commands: cd, ls, help, exit
 </p>
 
 $${\color{red}More \space commands \space to \space come!}$$
