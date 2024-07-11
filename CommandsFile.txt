@@ -1,0 +1,8 @@
+cd [direcrtory]
+exit
+help
+ls
+echo [message]
+touch [file_name]
+rm [file_name]
+ping [HOSTNAME/ IP adress]
