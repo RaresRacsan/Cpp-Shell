@@ -1,4 +1,5 @@
-# MyShellTest
+```diff
+# @@MyShellTest
 **What is this?**
 This is an implementation of the shell in C++.
 
@@ -10,11 +11,4 @@ Run commands from linux in a c++ made shell.
 Usable commands: cd, help, exit
 
 **More commands to come!**
-
-```diff
-- text in red
-+ text in green
-! text in orange
-# text in gray
-@@ text in purple (and bold)@@
 ```
