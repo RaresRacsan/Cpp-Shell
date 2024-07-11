@@ -16,5 +16,6 @@ int lsh_ls(const std::vector<std::string>& args);
 int lsh_echo(std::vector<std::string>& args);
 int lsh_touch(std::vector<std::string>& args);
 int lsh_rm(std::vector<std::string>& args);
+int lsh_ping(std::vector<std::string>& args);
 
 #endif // MYSHELLFUNCTIONS_H

@@ -26,6 +26,5 @@ top
 htop
 ps
 uname
-ping
 history
 cal

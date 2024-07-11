@@ -20,7 +20,8 @@ std::vector<std::string> builtin_str = {
 	"ls",
 	"echo",
 	"touch",
-	"rm"
+	"rm",
+	"ping"
 };
 
 std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
@@ -30,7 +31,8 @@ std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
 	lsh_ls,
 	lsh_echo,
 	lsh_touch,
-	lsh_rm
+	lsh_rm,
+	lsh_ping
 };
 
 int lsh_num_builtins() {
@@ -38,6 +40,47 @@ int lsh_num_builtins() {
 }
 
 // The implementation of the commands
+int lsh_ping(std::vector<std::string>& args) {
+	if (args.size() < 2) {
+		std::cerr << "err: expected argument to \"ping\"" << std::endl;
+		return 1;
+	}
+
+	std::string host = args[1];
+
+	// Prepare command and arguments for execvp
+	std::vector<char*> c_args;
+	c_args.push_back(const_cast<char*>("ping"));    // Command
+	c_args.push_back(const_cast<char*>("-c"));      // Count option
+	c_args.push_back(const_cast<char*>("4"));       // Number of requests
+	c_args.push_back(const_cast<char*>(host.c_str())); // Host
+	c_args.push_back(nullptr);                      // Null-terminated array
+
+	// Fork a child process
+	pid_t pid = fork();
+
+	if (pid == 0) {
+		// Child process: execute ping command
+		if (execvp("ping", c_args.data()) == -1) {
+			perror("Failed to execute command.");
+		}
+		exit(EXIT_FAILURE);
+	}
+	else if (pid < 0) {
+		// Forking failed
+		perror("Failed to fork");
+	}
+	else {
+		// Parent process: wait for child to finish
+		int status;
+		do {
+			pid_t wpid = waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+
+	return 1;
+}
+
 int lsh_rm(std::vector<std::string>& args) {
 	if (args.size() < 2) {
 		std::cerr << "err: expected arguments to \"rm\"" << std::endl;
