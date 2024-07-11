@@ -9,4 +9,4 @@ $${\color{purple}What \space can \space it \space do?}$$
 Run commands from linux in a c++ made shell.
 Usable commands: cd, help, exit
 
-$${\color{red}More \space commands \space to \space come?}$$
+$${\color{red}More \space commands \space to \space come!}$$
