@@ -1,0 +1,35 @@
+pwd
+mkdir
+rm
+cp
+mv
+touch
+file
+zip and unzip
+tar
+nano, vi and jed
+cat
+grep
+sed
+head
+tail
+awk
+sort
+cut
+diff
+tee locate
+find
+sudo
+su
+chmod
+chown
+df
+du 
+top
+htop
+ps
+uname
+ping
+history
+cal
+echo
