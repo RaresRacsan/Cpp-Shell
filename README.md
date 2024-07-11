@@ -9,7 +9,7 @@ $${\color{lightblue}How \space to \space use?}$$
 After creating the files in any operating system based on Linux, run the following commands: 
 </p>
 <p align="center">
-<code>g++ MyShell.cpp -o MyShell</code> and <code>./MyShell</code>.
+<code>g++ -o MyShell MyShell.cpp -std=c++17</code> and <code>./MyShell</code>.
 </p>
 
 $${\color{purple}What \space can \space it \space do?}$$
