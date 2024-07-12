@@ -2,9 +2,7 @@ cp
 mv
 zip and unzip
 tar
-nano, vi and jed
-grep
-sed
+(nano, vi and jed,grep,sed)
 head
 tail
 sort
