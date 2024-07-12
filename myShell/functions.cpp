@@ -1,23 +1,30 @@
 #include "functions.h"
 #include "builtin_functions.h"
 
-// The implementation of the commands
+// The implementation of the available commands
 int lsh_sort(std::vector<std::string>& args){
-	if(args.size() != 2){
+	// sort file
+	// sorting the lines of the file "file"
+	if(args.size() != 2){//incorrect structure
 		std::cerr << "err: incorrect number of arguments for \"sort\"" << std::endl;
 	}
 	else{
-		std::string file = args[1];
+		std::string file = args[1];	// file
+
+		// opening the file
 		std::ifstream fileIn(file);
+
 		std::vector<std::string> lines;
 		std::string line;
 
+		// keeping the lines in a vector to be able to sort them
 		while(std::getline(fileIn, line)){
 			lines.push_back(line);
 		}
 
 		sort(lines.begin(), lines.end());
 
+		// printing the sorted lines
 		for(int i = 0; i < lines.size(); i++){
 			std::cout << lines[i] << std::endl;
 		}
@@ -28,17 +35,23 @@ int lsh_sort(std::vector<std::string>& args){
 }
 
 int lsh_tail(std::vector<std::string>& args){
-	if(args.size() != 3){
+	// tail nr_lines file
+	// prints the last "nr_lines" lines from the file "file"
+	if(args.size() != 3){//incorrect structure
 		std::cerr << "err: incorrect number of arguments for \"head\"" << std::endl;
 	}
 	else{
-		int lines = std::stoi(args[1]);
-		std::string file = args[2];
+		int lines = std::stoi(args[1]);	// inputed nr of lines
+		std::string file = args[2];		// inputed file
+
+		// opening the file
 		std::ifstream fileIn(file);
 
 		std::vector<std::string> l;
 		std::string line;
 
+		// creating a vector containing all the lines of the file in order
+		// to see if the "nr_lines" > actual nr of line
 		while(std::getline(fileIn, line)){
 			l.push_back(line);
 		}
@@ -46,6 +59,7 @@ int lsh_tail(std::vector<std::string>& args){
 		int nrLines = l.size();
 		int startLine = (nrLines > lines) ? nrLines - lines : 0;
 
+		// printing the saved lines
 		for(int i = startLine; i < nrLines; i++){
 			std::cout << l[i] << std::endl;
 		}
@@ -56,22 +70,26 @@ int lsh_tail(std::vector<std::string>& args){
 }
 
 int lsh_head(std::vector<std::string>& args){
-	if(args.size() != 3){
+	// head nr_line file
+	// prints the first "nr_line" lines from the file "file"
+	if(args.size() != 3){//incorrect structure
 		std::cerr << "err: incorrect number of arguments for \"head\"" << std::endl;
 	}
 	else{
-		int lines = std::stoi(args[1]);
-		std::string file = args[2];
+		int lines = std::stoi(args[1]);	// inputed nr of lines
+		std::string file = args[2];		// file
 
+		// opening the file
 		std::ifstream fileIn (file);
 
-		if(fileIn.is_open()){
+		if(fileIn.is_open()){	// open
 			std::string line;
+			// printing the lines 
 			for(int i = 0; i < lines && std::getline(fileIn, line); i++){
 				std::cout << line<< std::endl;
 			}
 		}
-		else{
+		else{	// not open
 			std::cerr << "err: couldn't open the file" << std::endl;
 		}
 		fileIn.close();
@@ -80,18 +98,19 @@ int lsh_head(std::vector<std::string>& args){
 }
 
 int lsh_cp(std::vector<std::string>& args){
-	if(args.size() != 3){
+	// cp source destination
+	if(args.size() != 3){//incorrect structure
 		std::cerr << "err: incorrect number of arguments for \"cp\"" << std::endl;
 	}
 	else{
-		std::string from = args[1];
-		std::string to = args[2];
+		std::string from = args[1];	// source
+		std::string to = args[2];	// destination
 		try {
         // Perform the copy operation
         fs::copy_file(from, to, fs::copy_options::overwrite_existing);
 
         std::cout << "File copied successfully." << std::endl;
-    } catch (const fs::filesystem_error& e) {
+    } catch (const fs::filesystem_error& e) {//error
         std::cerr << "Error copying file: " << e.what() << std::endl;
     } 
 	}
@@ -99,13 +118,16 @@ int lsh_cp(std::vector<std::string>& args){
 }
 
 int lsh_cat(std::vector<std::string>& args){
-	if(args.size() != 2){
+	// cat file
+	if(args.size() != 2){//incorrect structure
 		std::cerr << "err: incorrect number of arguments for \"cat\"" << std::endl;
 	}
 	else{
+		// opening the file
 		std::string file = args[1];
 		std::ifstream fileIn(file);
 
+		// printing the content of the file
 		std::cout << std::string((std::istreambuf_iterator<char>(fileIn)),( std::istreambuf_iterator<char>()));
 		std::cout << std::endl;
 
@@ -115,17 +137,21 @@ int lsh_cat(std::vector<std::string>& args){
 }
 
 int lsh_mkdir(std::vector<std::string>& args){
-	if(args.size() != 2){
+	// mkdir directory_name
+	if(args.size() != 2){//incorrect structure
 		std::cerr << "err: incorrect number of arguments for \"mkdir\"" << std::endl;
 	}
 	else{
+		// in args[1] is the directorry_name
+		// creating new directory
 		std::filesystem::create_directory(args[1]);
 	}
 	return 1;
 }
 
 int lsh_pwd(std::vector<std::string>& args){
-	if(args.size() != 1){
+	// pwd
+	if(args.size() != 1){// incorrect structure
 		std::cerr << "err: Number of arguments is invalid for \"pwd\"" << std::endl;
 	}
 	else{
@@ -139,11 +165,13 @@ int lsh_pwd(std::vector<std::string>& args){
 }
 
 int lsh_ping(std::vector<std::string>& args) {
-	if (args.size() < 2) {
+	// ping host
+	if (args.size() < 2) {// incorrect structure
 		std::cerr << "err: expected argument to \"ping\"" << std::endl;
 		return 1;
 	}
 
+	// the second argument is going to be the host
 	std::string host = args[1];
 
 	// Prepare command and arguments for execvp
@@ -180,21 +208,23 @@ int lsh_ping(std::vector<std::string>& args) {
 }
 
 int lsh_rm(std::vector<std::string>& args) {
-	if (args.size() < 2) {
+	// rm file
+	if (args.size() < 2) {//incorrect structure
 		std::cerr << "err: expected arguments to \"rm\"" << std::endl;
 	}
-	else if (args.size() > 2) {
+	else if (args.size() > 2) {//incorrect structure
 		std::cerr << "err: too many arguments to \"rm\"" << std::endl;
 	}
 	else {
 		std::string file_name = args[1];
+		// trying to remove the file, if it is found
 		try {
-			if (std::filesystem::remove(file_name))
+			if (std::filesystem::remove(file_name))	// found
 				std::cout << "file " << file_name << " deleted.\n";
-			else
+			else	// not found
 				std::cout << "file " << file_name << " not found.\n";
 		}
-		catch (const std::filesystem::filesystem_error& err) {
+		catch (const std::filesystem::filesystem_error& err) {	// error
 			std::cout << "filesystem error: " << err.what() << '\n';
 		}
 	}
@@ -202,28 +232,33 @@ int lsh_rm(std::vector<std::string>& args) {
 }
 
 int lsh_touch(std::vector<std::string>& args) {
-	if (args.size() < 2) {
+	//touch file_name
+	if (args.size() < 2) {//incorrect structure
 		std::cerr << "err: expected arguments to \"touch\"" << std::endl;
 	}
-	else if (args.size() > 2) {
+	else if (args.size() > 2) {//incorrect structure
 		std::cerr << "err: too many arguments to \"touch\"" << std::endl;
 	}
 	else {
+		// trying to create a file with the name typed after the touch command
 		std::string file_name = args[1];
 		std::ofstream file(file_name);
-		if (file.fail()) {
+		if (file.fail()) {	// failed
 			std::cerr << "err: couldn't create file" << std::endl;
 		}
+		// no error message => file created 
 		file.close();
 	}
 	return 1;
 }
 
 int lsh_echo(std::vector<std::string>& args) {
-	if (args.size() < 2) {
+	// echo message
+	if (args.size() < 2) {// incorrect structure
 		std::cerr << "err: expected arguments to \"echo\"" << std::endl;
 	}
 	else {
+		// printing the arguments that were typed into the console
 		for (int i = 1; i < args.size(); i++) {
 			std::cout << args[i] << ' ';
 		}
@@ -233,7 +268,8 @@ int lsh_echo(std::vector<std::string>& args) {
 }
 
 int lsh_cd(std::vector<std::string>& args) {
-	if (args.size() < 2) {
+	// cd directory_name
+	if (args.size() < 2) {//incorrect structure
 		std::cerr << "err: expected argument to \"cd\"" << std::endl;
 	}
 	else {
@@ -245,6 +281,7 @@ int lsh_cd(std::vector<std::string>& args) {
 }
 
 int lsh_help(const std::vector<std::string>& args) {
+	// help
 	std::cout << "Read the CommandsFile file for more info." << std::endl;
 	std::cout << "The following are built in commands:" << std::endl;
 
@@ -258,6 +295,8 @@ int lsh_help(const std::vector<std::string>& args) {
 }
 
 int lsh_exit(const std::vector<std::string>& args) {
+	// exit
+	// Changing the status to 0
 	return 0;
 }
 
@@ -306,7 +345,7 @@ int lsh_ls(const std::vector<std::string>& args) {
 		return 1;
 	}
 
-	// read and print the directory content
+	// read and print the directory content ( name - file type )
 	while ((entry = readdir(dir)) != NULL) {
 		if (entry->d_name[0] == '.')
 			continue;
@@ -318,9 +357,7 @@ int lsh_ls(const std::vector<std::string>& args) {
 }
 
 std::string f_read_line() {
-	/**
-		* Reading a line from the console
-	*/
+	// Reading a line from the console
 	std::string line;
 
 	if (!std::getline(std::cin, line)) {	// fail
@@ -336,10 +373,8 @@ std::string f_read_line() {
 }
 
 std::vector<std::string> f_split_line(std::string line) {
-	/**
-		* Parameters: a string in which the content of a line read from the console
-		* The function separates the word from the line read before
-	*/
+	// Parameters: a string in which the content of a line read from the console
+	// The function separates the word from the line read before
 	std::vector<std::string> arguments;
 	std::stringstream ss(line);
 	std::string word;
@@ -399,6 +434,7 @@ int f_execute(std::vector<std::string>& args) {
         return 1;
     }
 
+	// Search the function in the built-in functions 
     for (int i = 0; i < lsh_num_builtins(); ++i) {
         if (args[0] == builtin_str[i]) {
             return builtin_func[i](args);
@@ -413,6 +449,7 @@ void f_loop() {
 	std::vector<std::string> args;
 	int status = 1;
 
+	// Keep going until the status is 0 (exit was typed)
 	do {
 		std::cout << ">> ";
 		line = f_read_line();

@@ -19,7 +19,7 @@
 
 namespace fs = std::filesystem;
 
-// Function declarations
+// Function declarations for each shell command
 int lsh_cd(std::vector<std::string>& args);
 int lsh_help(const std::vector<std::string>& args);
 int lsh_exit(const std::vector<std::string>& args);
@@ -44,4 +44,4 @@ int f_launch(std::vector<std::string> args);
 int f_execute(std::vector<std::string>& args);
 void f_loop();
 
-#endif // MYSHELL_FUNCTIONS_H
+#endif
