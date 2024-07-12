@@ -12,6 +12,8 @@
 #include <fstream>
 #include <filesystem>
 
+namespace fs = std::filesystem;
+
 // List of the commands that are introduced into the shell
 std::vector<std::string> builtin_str = {
     "cd",
@@ -21,7 +23,11 @@ std::vector<std::string> builtin_str = {
 	"echo",
 	"touch",
 	"rm",
-	"ping"
+	"ping",
+	"pwd", 
+	"mkdir",
+	"cat",
+	"cp"
 };
 
 std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
@@ -32,7 +38,11 @@ std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
 	lsh_echo,
 	lsh_touch,
 	lsh_rm,
-	lsh_ping
+	lsh_ping,
+	lsh_pwd,
+	lsh_mkdir,
+	lsh_cat,
+	lsh_cp
 };
 
 int lsh_num_builtins() {
@@ -40,6 +50,63 @@ int lsh_num_builtins() {
 }
 
 // The implementation of the commands
+int lsh_cp(std::vector<std::string>& args){
+	if(args.size() != 3){
+		std::cerr << "err: incorrect number of arguments for \"cp\"" << std::endl;
+	}
+	else{
+		std::string from = args[1];
+		std::string to = args[2];
+		try {
+        // Perform the copy operation
+        fs::copy_file(from, to, fs::copy_options::overwrite_existing);
+
+        std::cout << "File copied successfully." << std::endl;
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Error copying file: " << e.what() << std::endl;
+    } 
+	}
+	return 1;
+}
+
+int lsh_cat(std::vector<std::string>& args){
+	if(args.size() != 2){
+		std::cerr << "err: incorrect number of arguments for \"cat\"" << std::endl;
+	}
+	else{
+		std::string file = args[1];
+		std::ifstream fileIn(file);
+
+		std::cout << std::string((std::istreambuf_iterator<char>(fileIn)),( std::istreambuf_iterator<char>()));
+		std::cout << std::endl;
+	}
+	return 1;
+}
+
+int lsh_mkdir(std::vector<std::string>& args){
+	if(args.size() != 2){
+		std::cerr << "err: incorrect number of arguments for \"mkdir\"" << std::endl;
+	}
+	else{
+		std::filesystem::create_directory(args[1]);
+	}
+	return 1;
+}
+
+int lsh_pwd(std::vector<std::string>& args){
+	if(args.size() != 1){
+		std::cerr << "err: Number of arguments is invalid for \"pwd\"" << std::endl;
+	}
+	else{
+		// Get the current working directory
+    	fs::path currentPath = fs::current_path();
+    
+    	// Output the current working directory
+    	std::cout << "Current Directory: " << currentPath << std::endl;
+	}
+	return 1;
+}
+
 int lsh_ping(std::vector<std::string>& args) {
 	if (args.size() < 2) {
 		std::cerr << "err: expected argument to \"ping\"" << std::endl;
@@ -146,7 +213,7 @@ int lsh_cd(std::vector<std::string>& args) {
 }
 
 int lsh_help(const std::vector<std::string>& args) {
-	std::cout << "Read the README file for info." << std::endl;
+	std::cout << "Read the CommandsFile file for more info." << std::endl;
 	std::cout << "The following are built in commands:" << std::endl;
 
 	// Print out the list of built-in commands
