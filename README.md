@@ -17,7 +17,7 @@ $${\color{purple}What \space can \space it \space do?}$$
 Run commands from linux in a c++ made shell.
 </p>
 <p align="center">
-Usable commands: cd, ls, help, exit, echo, touch, rm, ping.
+Usable commands: cd, help, exit, ls, echo, touch, rm, ping, pwd, mkdir, cat, cp, head, tail, sort.
 </p>
 <p align="center">
 These commands are limited, not all options available.
