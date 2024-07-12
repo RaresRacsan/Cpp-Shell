@@ -1,4 +1,3 @@
-mv
 zip and unzip
 tar
 (nano, vi and jed,grep,sed)
