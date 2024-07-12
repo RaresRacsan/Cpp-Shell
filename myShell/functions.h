@@ -21,5 +21,8 @@ int lsh_pwd(std::vector<std::string>& args);
 int lsh_mkdir(std::vector<std::string>& args);
 int lsh_cat(std::vector<std::string>& args);
 int lsh_cp(std::vector<std::string>& args);
+int lsh_head(std::vector<std::string>& args);
+int lsh_tail(std::vector<std::string>& args);
+int lsh_sort(std::vector<std::string>& args);
 
-#endif // MYSHELLFUNCTIONS_H
+#endif

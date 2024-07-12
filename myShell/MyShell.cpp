@@ -27,7 +27,10 @@ std::vector<std::string> builtin_str = {
 	"pwd", 
 	"mkdir",
 	"cat",
-	"cp"
+	"cp",
+	"head",
+	"tail",
+	"sort"
 };
 
 std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
@@ -42,7 +45,10 @@ std::vector<std::function<int(std::vector<std::string>&)>> builtin_func = {
 	lsh_pwd,
 	lsh_mkdir,
 	lsh_cat,
-	lsh_cp
+	lsh_cp,
+	lsh_head,
+	lsh_tail,
+	lsh_sort
 };
 
 int lsh_num_builtins() {
@@ -50,6 +56,83 @@ int lsh_num_builtins() {
 }
 
 // The implementation of the commands
+int lsh_sort(std::vector<std::string>& args){
+	if(args.size() != 2){
+		std::cerr << "err: incorrect number of arguments for \"sort\"" << std::endl;
+	}
+	else{
+		std::string file = args[1];
+		std::ifstream fileIn(file);
+		std::vector<std::string> lines;
+		std::string line;
+
+		while(std::getline(fileIn, line)){
+			lines.push_back(line);
+		}
+
+		sort(lines.begin(), lines.end());
+
+		for(int i = 0; i < lines.size(); i++){
+			std::cout << lines[i] << std::endl;
+		}
+
+		fileIn.close();
+	}
+	return 1;
+}
+
+int lsh_tail(std::vector<std::string>& args){
+	if(args.size() != 3){
+		std::cerr << "err: incorrect number of arguments for \"head\"" << std::endl;
+	}
+	else{
+		int lines = std::stoi(args[1]);
+		std::string file = args[2];
+		std::ifstream fileIn(file);
+
+		std::vector<std::string> l;
+		std::string line;
+
+		while(std::getline(fileIn, line)){
+			l.push_back(line);
+		}
+
+		int nrLines = l.size();
+		int startLine = (nrLines > lines) ? nrLines - lines : 0;
+
+		for(int i = startLine; i < nrLines; i++){
+			std::cout << l[i] << std::endl;
+		}
+
+		fileIn.close();
+	}
+	return 1;
+}
+
+int lsh_head(std::vector<std::string>& args){
+	if(args.size() != 3){
+		std::cerr << "err: incorrect number of arguments for \"head\"" << std::endl;
+	}
+	else{
+		int lines = std::stoi(args[1]);
+		std::string file = args[2];
+
+		std::ifstream fileIn (file);
+
+		if(fileIn.is_open()){
+			std::string line;
+			for(int i = 0; i < lines && std::getline(fileIn, line); i++){
+				std::cout << line<< std::endl;
+			}
+		}
+		else{
+			std::cerr << "err: couldn't open the file" << std::endl;
+		}
+		fileIn.close();
+	}
+	return 1;
+}
+
 int lsh_cp(std::vector<std::string>& args){
 	if(args.size() != 3){
 		std::cerr << "err: incorrect number of arguments for \"cp\"" << std::endl;
@@ -79,6 +162,8 @@ int lsh_cat(std::vector<std::string>& args){
 
 		std::cout << std::string((std::istreambuf_iterator<char>(fileIn)),( std::istreambuf_iterator<char>()));
 		std::cout << std::endl;
+
+		fileIn.close();
 	}
 	return 1;
 }
@@ -183,6 +268,7 @@ int lsh_touch(std::vector<std::string>& args) {
 		if (file.fail()) {
 			std::cerr << "err: couldn't create file" << std::endl;
 		}
+		file.close();
 	}
 	return 1;
 }
