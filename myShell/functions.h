@@ -1,14 +1,25 @@
-#ifndef MYSHELLFUNCTIONS_H
-#define MYSHELLFUNCTIONS_H
+#ifndef MYSHELL_FUNCTIONS_H
+#define MYSHELL_FUNCTIONS_H
 
 #pragma once
 #include <vector>
 #include <string>
-#include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <dirent.h>
+#include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <functional>
 #include <cstring>
-#include <cerrno>
+#include <sys/stat.h>
+#include <fstream>
 
+namespace fs = std::filesystem;
+
+// Function declarations
 int lsh_cd(std::vector<std::string>& args);
 int lsh_help(const std::vector<std::string>& args);
 int lsh_exit(const std::vector<std::string>& args);
@@ -25,4 +36,12 @@ int lsh_head(std::vector<std::string>& args);
 int lsh_tail(std::vector<std::string>& args);
 int lsh_sort(std::vector<std::string>& args);
 
-#endif
+// Utility functions
+std::string get_file_type(const std::string& path);
+std::string f_read_line();
+std::vector<std::string> f_split_line(std::string line);
+int f_launch(std::vector<std::string> args);
+int f_execute(std::vector<std::string>& args);
+void f_loop();
+
+#endif // MYSHELL_FUNCTIONS_H
