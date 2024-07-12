@@ -4,6 +4,5 @@ tar
 head
 tail
 sort
-chmod
 top
 cal
