@@ -1,4 +1,3 @@
-tar
 head
 tail
 sort
