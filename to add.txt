@@ -2,4 +2,3 @@ head
 tail
 sort
 top
-cal
