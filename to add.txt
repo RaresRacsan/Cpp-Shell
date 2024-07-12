@@ -1,4 +1,3 @@
-pwd
 mkdir
 cp
 mv
