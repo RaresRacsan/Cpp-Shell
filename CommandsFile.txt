@@ -1,8 +1,15 @@
-cd [direcrtory]
-exit
-help
-ls
-echo [message]
-touch [file_name]
-rm [file_name]
-ping [HOSTNAME/ IP adress]
+- cd <directory>: Change the current directory.
+- help: Display information about built-in commands.
+- exit: Exit the shell.
+- ls: List files in the current directory.
+- echo <message>: Print a message to the terminal.
+- touch <file>: Create a new file.
+- rm <file>: Remove a file.
+- ping <host>: Ping a host.
+- pwd: Print the current working directory.
+- mkdir <directory>: Create a new directory.
+- cat <file>: Display the contents of a file.
+- cp <source> <destination>: Copy a file.
+- head <number_of_lines> <file>: Display the first few lines of a file.
+- tail <number_of_lines> <file>: Display the last few lines of a file.
+- sort <file>: Sort the contents of a file and display the sorted lines.
